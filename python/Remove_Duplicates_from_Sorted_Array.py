@@ -8,6 +8,10 @@ For example, Given input array A = [1,1,2],
 Your function should return length = 2, and A is now [1,2].
 '''
 
+'''
+Thoughts: It is a sorted array, then duplicates must be neighbours. For example, [1,1,1,2,2,2,3]
+But cannot be [1, 2, 1]
+'''
 
 import sys
 
@@ -18,41 +22,30 @@ def main():
         print("Usage: ./filename 1,1,1,1,2,2...")
         return
 
+    testarray = [int(i) for i in sys.argv[1].split(',')]
     #implementation
-    testlist = [int(i) for i in sys.argv[1].split(',')]
-    print("list = %s" % testlist)
-    print("length of original list is : %s" % len(testlist))
+    if not testarray:
+        return 0
+    if len(testarray) == 1:
+        return 1
 
-    '''
-    # This is not right because it will include the last number which will generate error: IndexError: list index out of range
-
-    for i in (0, len(testlist)):
-    	for j in (i+1, len(testlist)):
-    		if testlist[i] == testlist[j]:
-    			testlist.pop(j)
-    '''
-
-    for i in range(0, len(testlist)):
-        print("i = %s" % i) 
-        if not testlist[i]:
+    for i in range(0, len(testarray)):
+        if not testarray[i]:
             continue
 
-        for j in range(i+1, len(testlist)):
-            print("j = %s" % j) 
-            if testlist[i] == testlist[j]:
-                testlist[j] = None
+        for j in range(i+1, len(testarray)):
+            if testarray[i] == testarray[j]:
+                testarray[j] = None
 
-    '''
-    # This does not work...
-    for value in testlist:
-        if value is None:
-            testlist.remove(value)
-    '''
+    # cannot use for...in because remove will change the index
+    value = None
+    while value in testarray:
+        testarray.remove(value)
+        
 
-    testlist = [x for x in testlist if x is not None]
+    return len(testarray)
+        
 
-    print("new list = %s" % testlist)
-    print("length of new list is : %s" % len(testlist))
 
 
 if __name__ == "__main__":
