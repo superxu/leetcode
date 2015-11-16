@@ -29,24 +29,20 @@ def main():
     if len(testarray) == 1:
         return 1
 
-    for i in range(0, len(testarray)):
-        if not testarray[i]:
-            continue
-
-        for j in range(i+1, len(testarray)):
-            if testarray[i] == testarray[j]:
-                testarray[j] = None
-
-    # cannot use for...in because remove will change the index
-    value = None
-    while value in testarray:
-        testarray.remove(value)
+    i = 0
+    n = len(testarray)
+    for j in range(1, n):
+        if testarray[i] == testarray[j]:
+            continue # means j = j + 1
+        else:
+            testarray[i+1] = testarray[j]
+            i = i+1
+    
+    print("length = %s" % (i+1))
+    print("testarray = %s" % testarray)
+    return i+1
+                
         
-
-    return len(testarray)
-        
-
-
 
 if __name__ == "__main__":
 	main()
